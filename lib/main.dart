@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/material.dart';
 
 void main() {
@@ -7,29 +5,13 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
@@ -38,19 +20,87 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
+class MyHomePage extends StatelessWidget {
+  const MyHomePage({Key? key}) : super(key: key);
 
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("CyberEnigma"),
+        title: const Text("CyberEnigma"),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(20),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                "Xavsizlik turlari",
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
+              ),
+              const SizedBox(height: 10),
+              Container(
+                padding: const EdgeInsets.all(20),
+                width: 620,
+                height: 400,
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade300,
+                  borderRadius: BorderRadius.circular(28),
+                ),
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: 7,
+                  itemBuilder: (context, index) => const SwitchWidget(),
+                ),
+              ),
+              const SizedBox(height: 20),
+              const Text(
+                "Boshqa xizmatlar",
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
+              ),
+              const SizedBox(height: 10),
+              Container(
+                padding: const EdgeInsets.all(20),
+                width: 620,
+                height: 400,
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade300,
+                  borderRadius: BorderRadius.circular(28),
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class SwitchWidget extends StatefulWidget {
+  const SwitchWidget({Key? key}) : super(key: key);
+
+  @override
+  _SwitchWidgetState createState() => _SwitchWidgetState();
+}
+
+class _SwitchWidgetState extends State {
+  bool _switchValue = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: ListTile(
+        title: const Text("Spam xabarlar"),
+        subtitle: const Text("Spam xabarlarni tekshirish"),
+        trailing: Switch(
+          value: _switchValue,
+          onChanged: (newValue) {
+            setState(() {
+              _switchValue = newValue;
+            });
+          },
+        ),
       ),
     );
   }
