@@ -100,15 +100,35 @@ class _MainHomePageState extends State<MainHomePage> {
     await flutterLocalNotificationsPlugin.initialize(initializationSettings,
         onDidReceiveNotificationResponse: (initializationSettings) {});
 
+    // Request phone and SMS permissions
     final bool? result = await telephony.requestPhoneAndSmsPermissions;
 
     if (result != null && result) {
+      // Listen for incoming SMS messages
       telephony.listenIncomingSms(
         onNewMessage: onMessage,
         onBackgroundMessage: onBackgroundMessage,
         listenInBackground: true,
       );
     }
+
+    // Handle background notification interaction
+    const AndroidNotificationChannel channel = AndroidNotificationChannel(
+      'background_notification_channel',
+      'Background Notification Channel',
+      importance: Importance.high,
+      playSound: true,
+    );
+    await flutterLocalNotificationsPlugin
+        .resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>()
+        ?.createNotificationChannel(channel);
+
+    // Set up the callback for handling background notifications
+    await flutterLocalNotificationsPlugin.initialize(initializationSettings,
+        onDidReceiveBackgroundNotificationResponse: (payload) async {
+      debugPrint("Background notification selected: $payload");
+    });
 
     if (!mounted) return;
   }
