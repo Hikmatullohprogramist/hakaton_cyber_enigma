@@ -12,6 +12,19 @@
 			<action android:name="android.provider.Telephony.SMS_RECEIVED"/>
 		    </intent-filter>
 		</receiver>
+
+
+
+        <!-- For notification -->
+        <receiver android:exported="false" android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationReceiver" />
+<receiver android:exported="false" android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationBootReceiver">
+    <intent-filter>
+        <action android:name="android.intent.action.BOOT_COMPLETED"/>
+        <action android:name="android.intent.action.MY_PACKAGE_REPLACED"/>
+        <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+        <action android:name="com.htc.intent.action.QUICKBOOT_POWERON"/>
+    </intent-filter>
+</receiver>
         <activity
             android:name=".MainActivity"
             android:exported="true"

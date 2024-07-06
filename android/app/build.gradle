@@ -26,7 +26,21 @@ android {
     namespace "com.example.hakaton_cyber_enigma"
     compileSdk flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
+    
 
+
+
+
+configurations.all {
+    resolutionStrategy {
+        eachDependency {
+            if ((requested.group == "org.jetbrains.kotlin") && (requested.name.startsWith("kotlin-stdlib"))) {
+                useVersion("1.8.0")
+        }
+    }
+}}
+    
+    
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
